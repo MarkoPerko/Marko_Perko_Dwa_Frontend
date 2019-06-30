@@ -1,0 +1,84 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<section class="page-section" id="Igraci_dodaj">
+        <div class="container">
+    
+          <!-- Contact Section Heading -->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Igraci</h2>
+    
+          <!-- Icon Divider -->
+          <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"> </div>
+          </div>
+          <form>
+                <div class="container" id="app2">
+                    <h3> dodaj Igraca</h3>
+                    <div class="form-group">
+                      <label class="pull-left">Ime</label>
+                      <input type="text" class="form-control" placeholder="ime" v-model="objekt.ime">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Prezime</label>
+                        <input type="text" class="form-control" placeholder="prezime" v-model="objekt.prezime">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Registarski kod</label>
+                        <input type="text" class="form-control" placeholder="registracija" v-model="objekt.registracija">
+                    </div>  
+                    <div class="form-group">
+                        <label class="pull-left">Datum rodenja</label>
+                        <input type="text" class="form-control" placeholder="datum" v-model="objekt.datum">
+                    </div> 
+                    <button type="submit" class="btn btn-success " @click="dodaj_novi_igrac">Spremi</button>
+                </div>
+               
+      </section>
+{% endblock %} 
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script>
+        var vn = new Vue({
+          el: "#app2",
+          delimiters: ['[[',']]'],
+          data() {
+              return {
+                  objekt: {
+                    ime: '',
+                    prezime: '',
+                    registracija: '',
+                    datum: ''
+                }
+                }
+            },
+          methods: {
+          dodaj_novi_igrac(e){
+            e.preventDefault();
+            let novi = {
+                ime: this.objekt.ime,
+                prezime: this.objekt.prezime,
+                registracija: this.objekt.registracija,
+                datum: this.objekt.datum
+            }
+            axios.post('http://127.0.0.1:5000/igraci/novi', novi)
+            .then((respone) => {
+                window.alert("spremljeno");
+            })
+            .catch((error) =>{
+                console.log(error)
+            })
+            this.objekt.ime = ""
+            this.objekt.prezime = ""
+            this.objekt.registracija = ""
+            this.objekt.datum = ""
+          }
+        }
+          
+        })
+      </script>
+{% endblock %} 

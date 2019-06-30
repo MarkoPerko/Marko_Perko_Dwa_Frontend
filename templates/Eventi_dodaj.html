@@ -1,0 +1,84 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<section class="page-section" id="Eventi_dodaj">
+        <div class="container">
+    
+          <!-- Contact Section Heading -->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Eventi</h2>
+    
+          <!-- Icon Divider -->
+          <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"> </div>
+          </div>
+          <form>
+                <div class="container" id="app2">
+                    <h3> dodaj Igraca</h3>
+                    <div class="form-group">
+                      <label class="pull-left">datum</label>
+                      <input type="text" class="form-control" placeholder="datum" v-model="objekt.datum">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">vrijeme</label>
+                        <input type="text" class="form-control" placeholder="vrijeme" v-model="objekt.vrijeme">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">opis </label>
+                        <input type="text" class="form-control" placeholder="opis" v-model="objekt.opis">
+                    </div>  
+                    <div class="form-group">
+                        <label class="pull-left">lokacija</label>
+                        <input type="text" class="form-control" placeholder="lokacija" v-model="objekt.lokacija">
+                    </div> 
+                    <button type="submit" class="btn btn-success " @click="dodaj_novi_event">Spremi</button>
+                </div>
+               
+      </section>
+{% endblock %} 
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script>
+        var vn = new Vue({
+          el: "#app2",
+          delimiters: ['[[',']]'],
+          data() {
+              return {
+                  objekt: {
+                    datum: '',
+                    vrijeme: '',
+                    opis: '',
+                    lokacija: ''
+                }
+                }
+            },
+          methods: {
+          dodaj_novi_event(e){
+            e.preventDefault();
+            let novi = {
+                datum: this.objekt.datum,
+                vrijeme: this.objekt.vrijeme,
+                opis: this.objekt.opis,
+                lokacija: this.objekt.lokacija
+            }
+            axios.post('http://127.0.0.1:5000/eventi/novi', novi)
+            .then((respone) => {
+                window.alert("spremljeno");
+            })
+            .catch((error) =>{
+                console.log(error)
+            })
+            this.objekt.datum = ""
+            this.objekt.vrijeme = ""
+            this.objekt.opis = ""
+            this.objekt.lokacija = ""
+          }
+        }
+          
+        })
+      </script>
+{% endblock %} 

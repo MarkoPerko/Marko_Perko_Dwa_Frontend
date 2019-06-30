@@ -1,0 +1,77 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<section class="page-section" id="Inventar_dodaj">
+        <div class="container">
+    
+          <!-- Contact Section Heading -->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Inventar</h2>
+    
+          <!-- Icon Divider -->
+          <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"> </div>
+          </div>
+          <form>
+                <div class="container" id="app2">
+                    <h3> dodaj u inventar</h3>
+                    <div class="form-group">
+                      <label class="pull-left">Naziv</label>
+                      <input type="text" class="form-control" placeholder="naziv" v-model="objekt.naziv">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">tip opreme</label>
+                        <input type="text" class="form-control" placeholder="tip_opreme" v-model="objekt.tip_opreme">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Kolicina</label>
+                        <input type="text" class="form-control" placeholder="kolicina" v-model="objekt.kolicina">
+                    </div>  
+                    <button type="submit" class="btn btn-success " @click="dodaj_novi">Spremi</button>
+                </div>
+               
+      </section>
+{% endblock %} 
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script>
+        var vn = new Vue({
+          el: "#app2",
+          delimiters: ['[[',']]'],
+          data() {
+              return {
+                  objekt: {
+                    naziv: '',
+                    tip_opreme: '',
+                    kolicina: ''
+                }
+                }
+            },
+          methods: {
+          dodaj_novi(e){
+            e.preventDefault();
+            let novi = {
+              naziv: this.objekt.naziv,
+              tip_opreme: this.objekt.tip_opreme,
+              kolicina: this.objekt.kolicina
+            }
+            axios.post('http://127.0.0.1:5000/inventar/novi', novi)
+            .then((respone) => {
+                window.alert("spremljeno");
+            })
+            .catch((error) =>{
+                console.log(error)
+            })
+            this.objekt.naziv = ""
+            this.objekt.tip_opreme = ""
+            this.objekt.kolicina = ""
+          }
+        }
+          
+        })
+      </script>
+{% endblock %} 

@@ -1,0 +1,77 @@
+{% extends "layout.html"%}
+
+{% block content %}
+<section class="page-section" id="Vjezbe_dodaj">
+        <div class="container">
+    
+          <!-- Contact Section Heading -->
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Vjezbe</h2>
+    
+          <!-- Icon Divider -->
+          <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"> </div>
+          </div>
+          <form>
+                <div class="container" id="app2">
+                    <h3> dodaj Vjezbu</h3>
+                    <div class="form-group">
+                      <label class="pull-left">Opis</label>
+                      <input type="text" class="form-control" placeholder="opis" v-model="objekt.opis">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">trajanje</label>
+                        <input type="text" class="form-control" placeholder="trajanje" v-model="objekt.trajanje">
+                    </div>
+                    <div class="form-group">
+                        <label class="pull-left">Mediji</label>
+                        <input type="text" class="form-control" placeholder="media" v-model="objekt.media">
+                    </div>  
+                    <button type="submit" class="btn btn-success " @click="dodaj_novi_vjezbe">Spremi</button>
+                </div>
+               
+      </section>
+{% endblock %} 
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+<script>
+        var vn = new Vue({
+          el: "#app2",
+          delimiters: ['[[',']]'],
+          data() {
+              return {
+                  objekt: {
+                    opis: '',
+                    trajanje: '',
+                    media: ''
+                }
+                }
+            },
+          methods: {
+          dodaj_novi_vjezbe(e){
+            e.preventDefault();
+            let novi = {
+              opis: this.objekt.opis,
+              trajanje: this.objekt.trajanje,
+              media: this.objekt.media
+            }
+            axios.post('http://127.0.0.1:5000/vjezbe/novi', novi)
+            .then((respone) => {
+                window.alert("spremljeno");
+            })
+            .catch((error) =>{
+                console.log(error)
+            })
+            this.objekt.opis = ""
+            this.objekt.trajanje = ""
+            this.objekt.media = ""
+          }
+        }
+          
+        })
+      </script>
+{% endblock %} 

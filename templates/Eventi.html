@@ -2,11 +2,11 @@
 
 {% block content %}
 <!-- Contact Section -->
-<section class="page-section" id="Inventar">
+<section class="page-section" id="Eventi">
         <div class="container">
     
           <!-- Contact Section Heading -->
-          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Inventar</h2>
+          <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Eventi</h2>
     
           <!-- Icon Divider -->
           <div class="divider-custom">
@@ -18,15 +18,16 @@
           </div>
 
           <div class="container" id="app">
-            <h3>Inventar</h3>
-            <li v-for="oprema in info" class="oprema">
-               Naziv: [[ oprema.naziv ]], 
-               Kolicina: [[ oprema.kolicina ]], 
-               tip_opreme: [[ oprema.tip_opreme ]]
+            <h3>Eventi</h3>
+            <li v-for="dogadaji in info" class="dogadaji">
+               Datum: [[ dogadaji.datum ]], 
+               Vrijeme: [[ dogadaji.vrijeme ]], 
+               Opis: [[ dogadaji.opis ]]
+               Lokacija: [[ dogadaji.lokacija ]], 
             </li>
           </div>
           <div>
-              <a class="btn btn-success" href="/inventar/dodaj">dodaj novog</a>
+              <a class="btn btn-success" href="/Eventi/dodaj">dodaj novog</a>
           </div>
           
       </section>
@@ -45,8 +46,8 @@
     },
     mounted () {
       axios
-      .get('http://127.0.0.1:5000/inventar')
-      .then(response => (this.info = response.data.inventar))
+      .get('http://127.0.0.1:5000/eventi')
+      .then(response => (this.info = response.data.event))
     },
     
   })
